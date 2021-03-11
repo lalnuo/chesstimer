@@ -1,0 +1,53 @@
+.timers {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%
+}
+
+.timer {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-family: "Helvetica";
+    font-size: 64px;
+    user-select: none;
+    color: white;
+}
+
+.actionButton {
+    width: 250px;
+    height: 40px;
+}
+
+.buttons-container {
+    position: absolute;
+    bottom: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 32px;
+}
+
+.passive {
+    background-color: #001f3f;
+}
+
+.active {
+    background-color: #002852;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+html, body, #root {
+    margin: 0px;
+    height: 100%;
+    width: 100%;
+}
