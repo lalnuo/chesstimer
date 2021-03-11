@@ -4,3 +4,4 @@
 *.bs.js
 /lib
 .bsb.lock
+/prod

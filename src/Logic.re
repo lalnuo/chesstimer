@@ -24,7 +24,6 @@ type timerState = {
   gameState,
 };
 
-// let baseTimeInMillis = 1000 * 60 * 3;
 let baseTimeInMillis = 1000 * 60 * 3;
 
 let initialState = {
@@ -40,8 +39,8 @@ let initialState = {
   gameState: ReadyToStart,
 };
 
-let tick = (timerState, player, millis) => {
-  switch (player) {
+let tick = (timerState, millis) => {
+  switch (timerState.turn) {
   | Black => {
       ...timerState,
       gameState:
@@ -65,9 +64,9 @@ let tick = (timerState, player, millis) => {
   };
 };
 
-let handlePress = (timerState, color) => {
-  switch (color) {
-  | Black => {
+let handlePress = (timerState, pressedClock) => {
+  switch (timerState.turn, pressedClock) {
+  | (Black, Black) => {
       ...timerState,
       turn: White,
       timeLeft: {
@@ -76,7 +75,7 @@ let handlePress = (timerState, color) => {
           timerState.timeLeft.black + timerState.settings.additionInMillis,
       },
     }
-  | White => {
+  | (White, White) => {
       ...timerState,
       turn: Black,
       timeLeft: {
@@ -85,8 +84,19 @@ let handlePress = (timerState, color) => {
           timerState.timeLeft.white + timerState.settings.additionInMillis,
       },
     }
+    | (Black, White)=> timerState
+    | (White, Black) => timerState
   };
 };
+
+
+let handleStartGameClick = (timerState, pressedClock) => {
+  switch (pressedClock) {
+    | Black => { ...timerState, turn: Black, gameState: Ongoing }
+    | White => { ...timerState, turn: White, gameState: Ongoing }
+  }
+};
+
 
 let changeBaseTime = (timerState, newTime) => {
   ...timerState,
@@ -115,23 +125,22 @@ let resetGame = timerState => {
 
 type timerActions =
   | Tick(int)
-  | ChangeTurn
+  | Press(player)
   | Reset
   | ChangeBaseTime(int)
   | ChangeTimeAddition(int) 
-  | StartGame;
 
 
 let reducer = (timerState, action) => {
-  switch (action, timerState.turn, timerState.gameState) {
-  | (Tick(millis), color, Ongoing) => tick(timerState, color, millis)
-  | (ChangeTurn, color, Ongoing) => handlePress(timerState, color)
-  | (Tick(_), _, _) => timerState
-  | (ChangeTurn, _, _) => timerState
-  | (ChangeBaseTime(newTime), _, _) => changeBaseTime(timerState, newTime)
-  | (ChangeTimeAddition(newTime), _, _) =>
+  switch (action, timerState.gameState) {
+  | (Tick(millis), Ongoing) => tick(timerState, millis)
+  | (Press(pressedClock), Ongoing) => handlePress(timerState, pressedClock)
+  | (Press(pressedClock), ReadyToStart) => handleStartGameClick(timerState, pressedClock)
+  | (Tick(_), _) => timerState
+  | (Press(_), _) => timerState
+  | (ChangeBaseTime(newTime), _) => changeBaseTime(timerState, newTime)
+  | (ChangeTimeAddition(newTime), _) =>
     changeAddition(timerState, newTime)
-  | (Reset, _, _) => resetGame(timerState)
-  | (StartGame, _, _) => { ...resetGame(timerState), gameState: Ongoing }
+  | (Reset, _) => resetGame(timerState)
   };
 };

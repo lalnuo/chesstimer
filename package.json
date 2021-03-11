@@ -16,14 +16,19 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "bs-webapi": "^0.19.1",
     "dayjs": "^1.10.4",
     "duration-pretty": "^0.1.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
-    "reason-react": ">=0.7.1"
+    "reason-react": ">=0.7.1",
+    "webpack": "^5.24.4",
+    "webpack-cli": "^4.5.0"
   },
   "devDependencies": {
     "bs-platform": "^9.0.1",
+    "html-loader": "^2.1.2",
+    "html-webpack-plugin": "^5.3.1",
     "moduleserve": "^0.9.0"
   }
 }
