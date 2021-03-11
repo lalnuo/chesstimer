@@ -72,15 +72,6 @@ module Timers = {
   };
 };
 
-module Gameover = {
-  [@react.component]
-  let make = (~onReset) => {
-    <button className="actionButton" onClick={_ => onReset()}>
-      {React.string("Restart")}
-    </button>;
-  };
-};
-
 [@react.component]
 let make = () => {
   let (state, dispatch) =
@@ -137,7 +128,7 @@ let make = () => {
     <div className="buttons-container">
       {switch (state.gameState) {
        | Ongoing => <Reset onReset={() => dispatch(Logic.Reset)} />
-       | GameOver => <Gameover onReset={() => dispatch(Logic.Reset)} />
+       | GameOver => <Reset onReset={() => dispatch(Logic.Reset)} />
        | ReadyToStart => React.null
        }}
     </div>

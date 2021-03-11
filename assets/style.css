@@ -15,18 +15,15 @@
 }
 
 .actionButton {
-    width: 250px;
+    width: 150px;
     height: 40px;
 }
 
 .buttons-container {
     position: absolute;
-    bottom: 100px;
-    width: 100%;
+    bottom: 20px;
+    right: 20px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 32px;
 }
 
 .timer-container {
@@ -46,7 +43,7 @@
     font-size: 16px;
     text-align: center;
 }
-
+  
 .button-text {
     font-size: 16px;
     font-weight: 300;
@@ -65,10 +62,12 @@
 }
 
 .passive {
+    transition: background-color 0.25s linear;
     background-color: #001f3f;
 }
 
 .active {
+    transition: background-color 0.25s linear;
     background-color: #002852;
 }
 
